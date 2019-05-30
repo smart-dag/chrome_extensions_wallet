@@ -1,0 +1,53 @@
+{
+    "manifest_version": 2,
+    "name": "SDAG wallet",
+    "version": "1.0.1",
+    "description": "SDAG wallet",
+    "icons": {
+        "16": "img/icon.png",
+        "48": "img/icon.png",
+        "128": "img/icon.png"
+    },
+    "browser_action": {
+        "default_icon": "img/icon.png",
+        "default_title": "SDAG wallet",
+        "default_popup": "index.html"
+    },
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": true
+    },
+    "content_scripts": [{
+        "matches": [
+            "<all_urls>"
+        ],
+        "js": [
+            "content_scripts.js"
+        ],
+        "run_at": "document_end",
+        "all_frames": true
+    }],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "permissions": [
+        "contextMenus",
+        "tabs",
+        "notifications",
+        "webRequest",
+        "webRequestBlocking",
+        "storage",
+        "activeTab",
+        "http://*/*",
+        "https://*/*"
+    ],
+    "externally_connectable": {
+        "ids": [
+            "*"
+        ]
+    },
+    "web_accessible_resources": [
+        "api.js"
+    ],
+    "homepage_url": "https://github.com/smart-dag/chrome_extensions_wallet"
+}
