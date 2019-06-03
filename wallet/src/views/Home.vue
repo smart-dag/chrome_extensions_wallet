@@ -1,10 +1,11 @@
 <template>
   <div class="home">
-    <h2>{{address}}</h2>
-    <h1>{{balance}} SDG</h1>
-    <p>
-      <a :href="`http://faucet.sdag.io:60004/${address}`" target="_blank">猛击此处，获得测试token.</a>
-    </p>
+    <van-cell-group>
+      <van-field label="钱包地址" v-model="address" disabled/>
+      <van-field label="钱包余额" v-model="balance" disabled/>
+    </van-cell-group>
+    <p><van-button @click="getamount" type="info">猛击此处，获得测试token.</van-button></p>
+    
   </div>
 </template>
 
@@ -17,6 +18,11 @@ export default {
       address: "",
       balance: ""
     };
+  },
+  methods:{
+    getamount(){
+      window.open(`http://faucet.sdag.io:60004/${this.address}`);
+    }
   },
   created() {
     var loop = setInterval(() => {

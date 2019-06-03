@@ -23,7 +23,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
     if (request.method == "show") {
         chrome.tabs.create({
-            url: chrome.extension.getURL('index.html#' + sender.tab),
+            url: chrome.extension.getURL('index.html#'),
             active: false
         }, function(tab) {
             // After the tab has been created, open a window to inject the tab
@@ -32,16 +32,16 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
                 type: 'popup',
                 focused: true,
                 // incognito, top, left, ...
-                height: 600,
-                width: 500,
-                //top:0,
-                //left:0
+                width: 450,
+                height: 450
+                    //top:0,
+                    //left:0
             });
         });
     } else if (request.method == "pay") {
         //调用支付
         chrome.tabs.create({
-            url: chrome.extension.getURL('index.html#payment4web/' + request.address + '/' + request.amount + '/' + request.text),
+            url: chrome.extension.getURL('index.html#send/' + request.address + '/' + request.amount + '/' + request.text),
             active: false
         }, function(tab) {
             // After the tab has been created, open a window to inject the tab
@@ -50,8 +50,9 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
                 type: 'popup',
                 focused: true,
                 // incognito, top, left, ...
-                height: 600,
-                width: 500,
+                width: 450,
+                height: 450
+
                 //top:0,
                 //left:0
             });

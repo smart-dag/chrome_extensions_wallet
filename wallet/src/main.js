@@ -4,10 +4,10 @@ import router from './router'
 import store from './store'
 
 Vue.config.productionTip = false
-import mandMobile from 'mand-mobile'
-import 'mand-mobile/lib/mand-mobile.css'
-Vue.use(mandMobile);
-
+import Vant from 'vant';
+import 'vant/lib/index.css';
+import 'vant/lib/icon/local.css';
+Vue.use(Vant);
 const { default: Wallet } = require("sdagwallet.js");
 //初始化钱包
 let wallet = new Wallet();

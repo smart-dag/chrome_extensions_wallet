@@ -21,11 +21,9 @@ sdag = {
         console.log("cb:", success_cb);
         window.postMessage({
             "target": "background",
-            "data": {
-                address: address,
-                amount: amount,
-                text: text
-            },
+            "address": address,
+            "amount": amount,
+            "text": text,
             "method": "pay",
         }, "*");
     }
