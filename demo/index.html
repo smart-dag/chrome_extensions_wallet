@@ -21,11 +21,19 @@
 
 <body>
     <div class="demo">
+        <h3 id="msg">付款 demo</h3>
         <button type="button" onclick="show()" class="btn btn-primary">显示钱包</button>
-        <button type="button" onclick="pay()" class="btn btn-primary">付款</button>
+        <button type="button" onclick="pay()" class="btn btn-primary">付款 0.1 SDG</button>
     </div>
 
     <script>
+        function test() {
+            sdag.test(function() {
+                alert("haha")
+                document.getElementById("msg").innerHTML = "已经付款";
+            });
+        }
+
         function show() {
             if (typeof sdag == "undefined") {
                 alert("请安装sdag扩展钱包!")
@@ -40,8 +48,9 @@
                 alert("请安装sdag扩展钱包!")
             } else {
                 console.log("pay");
-                sdag.pay("DDZOSUYQ5TRVDKJPKREDUL473LJP5ZRV", 10, "text", function() {
-                    alert("支付成功！");
+                document.getElementById("msg").innerHTML = "等待付款";
+                sdag.pay("DDZOSUYQ5TRVDKJPKREDUL473LJP5ZRV", 0.1, "体恤衫，订单编号05002", function() {
+                    document.getElementById("msg").innerHTML = "已经付款";
                 });
             }
         }

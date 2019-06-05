@@ -25,24 +25,28 @@
 </style>
 
 <script>
-import { Dialog } from 'vant';
+const stringRandom = require("string-random");
+const { default: Wallet } = require("sdagwallet.js");
+import { Dialog } from "vant";
 export default {
   name: "send",
   components: {},
   methods: {
     pay() {
-      this.$store.state.wallet
+      this.wallet
         .send({ amount: this.amount, to: this.to, text: this.text })
         .then(json => {
           console.log(json);
-          Dialog.alert({
-            title: "标题",
-            message: "付款成功"
-          }).then(() => {
-            var bg = chrome.extension.getBackgroundPage();
-            bg.pay_success(); //pay_success()是background中的一个方法
-            this.$router.push({ path: "/" });
-          });
+          this.$route.push({ path: "/success", params: { hash: json.hash } });
+          // Dialog.alert({
+          //   title: "标题",
+          //   message: "付款成功"
+          // }).then(() => {
+          //   var bg = chrome.extension.getBackgroundPage();
+          //   console.log(bg);
+          //   bg.pay_success(); //pay_success()是background中的一个方法
+          //   this.$router.push({ path: "/" });
+          // });
           //成功
         })
         .catch(err => {
@@ -75,20 +79,40 @@ export default {
       balance: "",
       to: "",
       amount: "",
-      text: ""
+      text: "",
+      wallet: null
     };
   },
   created() {
+    var _self = this;
     this.to = this.$route.params.address;
     this.amount = this.$route.params.amount;
     this.text = this.$route.params.text;
-    var loop = setInterval(() => {
-      if (this.$store.state.is_login) {
-        clearInterval(loop);
-        this.address = this.$store.state.address;
-        this.balance = this.$store.state.balance;
-      }
-    }, 1000);
+    let peer_id = stringRandom(32);
+    let wallet = new Wallet({ peerId: peer_id });
+    console.log(peer_id);
+    //从本地存储里获得助记词
+    let mnemonic = localStorage.getItem("mnemonic");
+    //如果没有助记词,则生成助记词
+    if (!mnemonic) {
+      mnemonic = wallet.generateMnemonic().toString();
+      //保存在本地存储里
+      localStorage.setItem("mnemonic", mnemonic);
+    }
+    //配置hub
+    wallet.configHub("wss://explorer.sdag.io:20003");
+    //登录钱包
+    wallet.loginWithMnemonic(mnemonic).then(() => {
+      //算出钱包地址
+      let address = wallet.getAddress().toString();
+      this.address = address;
+      //获得余额
+      wallet.getBalance().then(balance => {
+        let newbalance = balance / 1000000;
+        _self.balance = newbalance;
+        _self.wallet = wallet;
+      });
+    });
   }
 };
 </script>

@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d21a36a"],{bb0d:function(s,a,e){"use strict";e.r(a);var t=function(){var s=this,a=s.$createElement,e=s._self._c||a;return e("div",{staticClass:"success"},[e("p",[s._v("支付成功")]),e("p",[s._v(s._s(s.hash))])])},n=[],c={name:"success",data:function(){},created:function(){this.hash=this.$route.params.hash;var s=chrome.extension.getBackgroundPage();s.pay_success(this.hash)}},u=c,h=e("2877"),i=Object(h["a"])(u,t,n,!1,null,null,null);a["default"]=i.exports}}]);
+//# sourceMappingURL=chunk-2d21a36a.a31951fe.js.map

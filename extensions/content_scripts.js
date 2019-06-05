@@ -11,26 +11,27 @@ function injectScript(file, node) {
 injectScript(chrome.extension.getURL('api.js'), 'body');
 
 
-//获得来自注入对api的消息
+//2)获得来自注入api的消息
 window.addEventListener('message', function(e) {
     // 接受来自api的消息，如果要给background，则传递给 background
+    console.log("2:content get msg from api");
     if (e.data.target === "background") {
+        console.log("3:content post msg to background");
         chrome.runtime.sendMessage(e.data, function(response) {
-            console.log("response: " + JSON.stringify(response));
+            console.log(response);
         });
     }
-
 });
 
 
 //接受来自 background 的消息
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    //转发给注入的api
+    // 转发给注入的api
     window.postMessage({
         "target": "api",
         "data": {},
         "method": request.method,
     }, "*");
     //给background的回调函数
-    sendResponse("hi")
+    // sendResponse(request)
 });

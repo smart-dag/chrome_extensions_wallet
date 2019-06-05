@@ -11,16 +11,17 @@ export default new Router({
             component: Home
         },
         {
-            path: '/about',
-            name: 'about',
-            component: () =>
-                import ('./views/About.vue')
-        },
-        {
             path: '/send/:address/:amount/:text',
             name: 'send',
             component: () =>
                 import ('./views/Send.vue')
+        },
+        {
+            path: '/success',
+            name: 'success',
+            component: () =>
+                import ('./views/Success.vue')
         }
+
     ]
 })

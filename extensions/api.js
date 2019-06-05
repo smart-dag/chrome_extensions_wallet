@@ -2,15 +2,22 @@ sdag = {
     name: "sdag",
     extensionId: "klckigplglpnolgbpknkjobjajmngijk",
     version: 0.1,
-    test: function() {
-        console.log(this.extensionId);
+    test: function(success_cb) {
+        // 转发到content，告诉content转发给 background
+        this.pay_success_cb = success_cb;
+        console.log("0:cb", success_cb);
+        // 1)
+        console.log("1:post msg from api to content");
+        window.postMessage({
+            "target": "background",
+            "method": "test",
+        }, "*");
     },
     //打开钱包
     show: function() {
         // 转发到content，告诉content转发给 background
         window.postMessage({
             "target": "background",
-            "data": {},
             "method": "show",
         }, "*");
     },
@@ -36,7 +43,8 @@ window.addEventListener('message', function(e) {
         console.log(e.data);
         if (e.data.method == "pay_finish") {
             //执行成功的方法
-            sdag.pay_success_cb();
+            console.log("pay finish");
+            sdag.pay_success_cb(e.data.text);
         }
     }
 });
