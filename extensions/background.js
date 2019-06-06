@@ -2,6 +2,7 @@
 function pay_success(text) {
     chrome.tabs.query({ active: true }, function(tabs) {
         console.log("tabs", tabs)
+            //发送给api
         tabs.forEach(tab => {
             chrome.tabs.sendMessage(tab.id, { msg: "支付成功", method: "pay_finish", text: text });
         });

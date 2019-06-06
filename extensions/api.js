@@ -40,7 +40,7 @@ sdag = {
 //接收来自content的消息
 window.addEventListener('message', function(e) {
     if (e.data.target == "api") {
-        console.log(e.data);
+        console.log("get api msg from background", e.data);
         if (e.data.method == "pay_finish") {
             //执行成功的方法
             console.log("pay finish");

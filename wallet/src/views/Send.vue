@@ -33,11 +33,16 @@ export default {
   components: {},
   methods: {
     pay() {
+      console.log("paying...");
       this.wallet
-        .send({ amount: this.amount, to: this.to, text: this.text })
+        .send({ amount: parseInt(this.amount), to: this.to, text: this.text })
         .then(json => {
           console.log(json);
-          this.$route.push({ path: "/success", params: { hash: json.hash } });
+          this.$router.push({
+            path: "/success",
+            name: "success",
+            params: { hash: json.hash }
+          });
           // Dialog.alert({
           //   title: "标题",
           //   message: "付款成功"
@@ -51,6 +56,11 @@ export default {
         })
         .catch(err => {
           //失败
+          console.log(err);
+          Dialog.alert({
+            title: "错误",
+            message: err
+          }).then(() => {});
         });
     }
   },

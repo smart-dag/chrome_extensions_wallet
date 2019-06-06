@@ -106,7 +106,7 @@ export default {
         sdag.pay(
           "DDZOSUYQ5TRVDKJPKREDUL473LJP5ZRV",
           _self.price/100,
-          `图书订单，共${this.price}SDG`,
+          `图书订单，共${this.price/100}SDG`,
           function(hash) {
             Dialog.alert({
               title: "付款成功",
